@@ -8,7 +8,7 @@ window.polySolvePage = function(page, options, callback) {
   html += line + ind + '<link rel="stylesheet" href="//d2v52k3cl9vedd.cloudfront.net/basscss/7.0.4/basscss.min.css">';
   html += line + "</head><body>";
 
-  html += "<!-- debug:\n" + JSON.stringify(page, null, 2) + "\n-->";
+  // html += "<!-- debug:\n" + JSON.stringify(page, null, 2) + "\n-->";
 
   page.items.forEach(function(item) {
     html += line+ind+"<section>";
