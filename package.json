@@ -1,0 +1,22 @@
+{
+  "name": "nilla-system",
+  "version": "0.0.1",
+  "description": "makes a website from The Grid API data",
+  "main": "nilla.js",
+  "scripts": {
+    "test": "npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/forresto/nilla-system.git"
+  },
+  "keywords": [
+    "thegrid"
+  ],
+  "author": "Forrest O.",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/forresto/nilla-system/issues"
+  },
+  "homepage": "https://github.com/forresto/nilla-system#readme"
+}
