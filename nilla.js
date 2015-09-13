@@ -8,11 +8,6 @@ window.polySolvePage = function(page, options, callback) {
     html += line + ind + '<link rel="stylesheet" href="http://d2v52k3cl9vedd.cloudfront.net/basscss/7.0.4/basscss.min.css">';
     html += line + "</head><body>";
 
-    // Debug
-    html += line + '<!--';
-    html += JSON.stringify(arguments);
-    html += line + '-->';
-
     page.items.forEach(function(item) {
         html += line+ind+"<section>";
         item.content.forEach(function(block) {
