@@ -1,5 +1,14 @@
 // Just wrap each item in a section, and output the HTML as provided by API
-// No CSS/styling is performed
+
+var removeLast = function (str, search) {
+  var split = str.split('/');
+  if (split[split.length-1] === 'index.html') {
+    split.pop()
+    str = split.join('/')
+  }
+  return str;
+};
+
 window.polySolvePage = function(page, options, callback) {
   var line = "\n";
   var ind = "  ";
@@ -12,7 +21,9 @@ window.polySolvePage = function(page, options, callback) {
 
   html += line + "<header><nav>";
   page.navigation.forEach(function (nav) {
-    html += line + ind + '<a href="/'+nav.href+'" class="btn py2">'+nav.title+'</a>';
+    var link = page.siteUrl + nav.href;
+    link = removeLast(link, 'index.html');
+    html += line + ind + '<a href="'+link+'" class="btn py2">'+nav.title+'</a>';
   });
   html += line + "</nav></header>";
 
