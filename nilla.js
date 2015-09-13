@@ -10,9 +10,15 @@ window.polySolvePage = function(page, options, callback) {
 
   // html += "<!-- debug:\n" + JSON.stringify(page, null, 2) + "\n-->";
 
-  page.items.forEach(function(item) {
+  html += line + "<header><nav>";
+  page.navigation.forEach(function (nav) {
+    html += line + ind + '<a href="/'+nav.href+'" class="btn py2">'+nav.title+'</a>';
+  });
+  html += line + "</nav></header>";
+
+  page.items.forEach(function (item) {
     html += line+ind+"<section>";
-    item.content.forEach(function(block) {
+    item.content.forEach(function (block) {
       html += line+ind+ind+block.html;
     });
     html += line+ind+"</section>"
