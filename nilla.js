@@ -197,6 +197,22 @@ var polySolvePage =
 	      html += '</section>';
 	    });
 
+	    html += '\n      <footer class="m1">\n        <nav>\n    ';
+	    page.links.forEach(function (nav) {
+	      var href = nav.href;
+	      var rel = nav.rel;
+
+	      var url = page.siteUrl + href;
+	      var titleMap = {
+	        alternate: 'rss',
+	        previous: '&#8592;',
+	        next: '&#8594;'
+	      };
+	      var title = titleMap[rel] ? titleMap[rel] : rel;
+	      html += '<a href="' + url + '" class="btn btn-primary black bg-darken-1 mr1">' + title + '</a>';
+	    });
+	    html += '\n        </nav>\n      </footer>\n    ';
+
 	    html += '\n      </body>\n    </html>';
 
 	    return callback(err, html, details);

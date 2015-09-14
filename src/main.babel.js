@@ -158,6 +158,26 @@ export default function (page, options, callback) {
     });
 
     html += `
+      <footer class="m1">
+        <nav>
+    `;
+    page.links.forEach(nav => {
+      let {href, rel} = nav;
+      let url = page.siteUrl + href;
+      let titleMap = {
+        alternate: 'rss',
+        previous: '&#8592;',
+        next: '&#8594;',
+      };
+      let title = titleMap[rel] ? titleMap[rel] : rel;
+      html += `<a href="${url}" class="btn btn-primary black bg-darken-1 mr1">${title}</a>`;
+    });
+    html += `
+        </nav>
+      </footer>
+    `;
+
+    html += `
       </body>
     </html>`;
 
