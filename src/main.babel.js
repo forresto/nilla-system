@@ -96,12 +96,21 @@ function renderCover (block) {
   return html;
 }
 
+function renderHTML (block) {
+  if (['h1','h2','h3','h4','h5','h6','text','quote'].indexOf(block.type) === -1)
+    return '';
+  if (block.html)
+    return block.html;
+  return '';
+}
+
 function renderBlock (block) {
   return `
     ${renderCover(block)}
     ${renderTitle(block)}
     ${renderAttribution(block)}
     ${renderDescription(block)}
+    ${renderHTML(block)}
   `;
 }
 
