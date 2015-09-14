@@ -9,6 +9,8 @@ module.exports = {
     library: 'polySolvePage',
     libraryTarget: 'var'
   },
+  debug: true,
+  devtool: 'cheap-module-eval-source-map',
   module: {
     loaders: [
       { test: /\.babel\.js$/, loader: 'babel-loader' },

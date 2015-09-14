@@ -1,9 +1,9 @@
 import feed from '../fixtures/feed';
 import page from '../fixtures/page';
 
-var feedFrame = document.getElementById('feed');
-var pageFrame = document.getElementById('page');
+function renderIframe (id, html) {
+  document.getElementById(id).src = "data:text/html;charset=utf-8,"+encodeURIComponent(html);
+}
 
-window.polySolvePage(feed, {}, (err, html, config) => (feedFrame.src = "data:text/html;charset=utf-8,"+html));
-
-window.polySolvePage(page, {}, (err, html, config) => (pageFrame.src = "data:text/html;charset=utf-8,"+html));
+window.polySolvePage(feed, {}, (err, html, config) => renderIframe('feed', html) );
+window.polySolvePage(page, {}, (err, html, config) => renderIframe('page', html) );
