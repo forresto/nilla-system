@@ -5,7 +5,7 @@
   "main": "nilla.js",
   "scripts": {
     "test": "npm test",
-    "start": "webpack-dev-server --hot",
+    "start": "export DEV=true; webpack-dev-server --hot",
     "build": "webpack"
   },
   "repository": {

@@ -1,3 +1,5 @@
+__DEV = (process.env.DEV === 'true');
+
 module.exports = {
   entry: {
     nilla: './src/main.babel.js',
@@ -9,8 +11,8 @@ module.exports = {
     library: 'polySolvePage',
     libraryTarget: 'var'
   },
-  debug: true,
-  devtool: 'cheap-module-eval-source-map',
+  debug: __DEV,
+  devtool: (__DEV ? 'cheap-module-eval-source-map' : null),
   module: {
     loaders: [
       { test: /\.babel\.js$/, loader: 'babel-loader' },
