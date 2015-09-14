@@ -1,8 +1,14 @@
+import {encode} from 'he';
+
 const line = "\n";
 const ind = '  ';
 
+function escape (html) {
+  return encode(html, {'useNamedReferences': true});
+}
+
 function removeLast (str, search) {
-  var split = str.split('/');
+  let split = str.split('/');
   if (split[split.length-1] === 'index.html') {
     split[split.length-1] = '';
     str = split.join('/')
@@ -10,36 +16,84 @@ function removeLast (str, search) {
   return str;
 }
 
+function renderTitle (block) {
+  let html = '';
+  if (block.metadata && block.metadata.title)
+    html += `<h2>${encode(block.metadata.title)}</h2>`;
+  return html;
+}
+
+function renderAttribution (block) {
+  let html = '';
+  if (block.metadata && block.metadata.author && block.metadata.author.length) {
+    let authors = block.metadata.author.map(author => {
+      let span = `<span>`
+      if (author.url)
+        span += `<a href="${author.url}">`;
+      if (author.name)
+        span += escape(author.name);
+      else
+        span += 'credit';
+      if (author.url)
+        span += `<a href="${author.url}">`;
+      span += `</span>`
+    });
+    html += `<p>${authors.join(', ')}</p>`;
+  }
+  return html;
+}
+
+function renderCover (block) {
+  let html = '';
+  console.log(block.cover);
+  if (block.cover && block.cover.src) {
+    html += `<div><img src="${block.cover.src}"`;
+    if (block.metadata && block.metadata.caption)
+      html += ` alt="${encode(block.metadata.caption)}"`
+    html += ` /></div>`;
+  }
+  return html;
+}
+
+function renderBlock (block) {
+  return `\n<section>
+      ${renderCover(block)}
+      ${renderTitle(block)}
+      ${renderAttribution(block)}
+    </section>`;
+}
+
 // Just wrap each item in a section, and output the HTML as provided by API
 export default function (page, options, callback) {
 
-  var html = "<!doctype html>\n<html><head>"
-  html += line + "<meta charset=\"utf-8\">";
-  html += line + "<title>"+page.title+"</title>";
-  html += line + ind + '<link rel="stylesheet" href="https://d2v52k3cl9vedd.cloudfront.net/basscss/7.0.4/basscss.min.css">';
-  html += line + "</head><body>";
+  let html = `<!doctype html>
+    <html>
+      <head>
+        <meta charset="utf-8">
+        <title>${escape(page.title)}</title>
+        <link rel="stylesheet" href="https://d2v52k3cl9vedd.cloudfront.net/basscss/7.0.4/basscss.min.css">
+      </head>
+    <body>`;
 
   // html += "<!-- debug:\n" + JSON.stringify(page, null, 2) + "\n-->";
 
   html += line + "<header>" + line + "<nav>";
   page.navigation.forEach(nav => {
-    var link = page.siteUrl + nav.href;
+    let link = page.siteUrl + nav.href;
     link = removeLast(link, 'index.html');
     html += line + ind + '<a href="'+link+'" class="btn py2">'+nav.title+'</a>';
   });
   html += line + "</nav>" + line + "</header>";
 
   page.items.forEach(item => {
-    html += line+ind+"<section>";
     item.content.forEach(block => {
-      html += line+ind+ind+block.html;
+      html += renderBlock(block);
     });
-    html += line+ind+"</section>";
   });
 
   html += line+"</body></html>";
-  var err = null;
-  var details = {};
+  let err = null;
+  let details = {};
   return callback(err, html, details);
 
 };
