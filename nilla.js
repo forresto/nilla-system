@@ -59,6 +59,10 @@ var polySolvePage =
 
 	var _he = __webpack_require__(19);
 
+	var _nav = __webpack_require__(20);
+
+	var _nav2 = _interopRequireDefault(_nav);
+
 	var line = "\n";
 	var ind = '  ';
 	var maxWidth = 1280;
@@ -180,38 +184,22 @@ var polySolvePage =
 
 	    // html += "<!-- debug:\n" + JSON.stringify(page, null, 2) + "\n-->";
 
-	    html += '\n      <header class="m1">\n        <nav>\n    ';
-	    page.navigation.forEach(function (nav) {
-	      var link = page.siteUrl + nav.href;
-	      link = removeLast(link, 'index.html');
-	      html += '<a href="' + link + '" class="btn btn-primary black bg-darken-1 mr1">' + nav.title + '</a>';
-	    });
-	    html += '\n        </nav>\n      </header>\n    ';
+	    html += '\n<header class="m1">';
+	    html += (0, _nav2['default'])(page.navigation, page.siteUrl);
+	    html += '</header>';
 
 	    page.items.forEach(function (item) {
-	      html += '<section>';
+	      html += '\n<section>';
 	      // html += renderBlock(item);
 	      item.content.forEach(function (block) {
 	        html += renderBlock(block);
 	      });
-	      html += '</section>';
+	      html += '\n</section>';
 	    });
 
-	    html += '\n      <footer class="m1">\n        <nav>\n    ';
-	    page.links.forEach(function (nav) {
-	      var href = nav.href;
-	      var rel = nav.rel;
-
-	      var url = page.siteUrl + href;
-	      var titleMap = {
-	        alternate: 'rss',
-	        previous: '&#8592;',
-	        next: '&#8594;'
-	      };
-	      var title = titleMap[rel] ? titleMap[rel] : rel;
-	      html += '<a href="' + url + '" class="btn btn-primary black bg-darken-1 mr1">' + title + '</a>';
-	    });
-	    html += '\n        </nav>\n      </footer>\n    ';
+	    html += '\n<footer class="m1">';
+	    html += (0, _nav2['default'])(page.links, page.siteUrl);
+	    html += '</footer>';
 
 	    html += '\n      </body>\n    </html>';
 
@@ -3868,6 +3856,45 @@ var polySolvePage =
 	}(this));
 
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(14)(module), (function() { return this; }())))
+
+/***/ },
+/* 20 */
+/***/ function(module, exports) {
+
+	// Make <nav> from an array of links
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+	var titleMap = {
+	  alternate: 'rss',
+	  previous: '&#8592;',
+	  next: '&#8594;'
+	};
+
+	exports['default'] = function (links) {
+	  var siteUrl = arguments.length <= 1 || arguments[1] === undefined ? '' : arguments[1];
+
+	  if (!links || !links.length) return '';
+
+	  var html = '\n<nav>';
+	  links.forEach(function (nav) {
+	    var href = nav.href;
+	    var rel = nav.rel;
+	    var title = nav.title;
+
+	    var url = siteUrl + href;
+	    if (titleMap[rel]) title = titleMap[rel];
+	    html += '<a href="' + url + '" rel="$rel" class="btn compact btn-link p1">' + title + '</a>';
+	  });
+	  html += '</nav>';
+
+	  return html;
+	};
+
+	module.exports = exports['default'];
 
 /***/ }
 /******/ ]);
