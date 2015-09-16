@@ -18,5 +18,8 @@ module.exports = {
       { test: /\.babel\.js$/, loader: 'babel-loader' },
       { test: /\.json$/, loader: 'json-loader' },
     ]
+  },
+  resolve: {
+    extensions: ['', '.babel.js', '.js', '.json']
   }
 };

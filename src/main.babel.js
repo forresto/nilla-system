@@ -1,6 +1,8 @@
 import imgflo from 'imgflo-url';
 import {encode} from 'he';
 
+import Nav from './nav';
+
 const line = "\n";
 const ind = '  ';
 const maxWidth = 1280;
@@ -134,48 +136,22 @@ export default function (page, options, callback) {
 
     // html += "<!-- debug:\n" + JSON.stringify(page, null, 2) + "\n-->";
 
-    html += `
-      <header class="m1">
-        <nav>
-    `;
-    page.navigation.forEach(nav => {
-      let link = page.siteUrl + nav.href;
-      link = removeLast(link, 'index.html');
-      html += `<a href="${link}" class="btn btn-primary black bg-darken-1 mr1">${nav.title}</a>`;
-    });
-    html += `
-        </nav>
-      </header>
-    `;
+    html += `\n<header class="m1">`;
+    html += Nav(page.navigation, page.siteUrl);
+    html += `</header>`;
 
     page.items.forEach(item => {
-      html += `<section>`;
+      html += `\n<section>`;
       // html += renderBlock(item);
       item.content.forEach(block => {
         html += renderBlock(block);
       });
-      html += `</section>`;
+      html += `\n</section>`;
     });
 
-    html += `
-      <footer class="m1">
-        <nav>
-    `;
-    page.links.forEach(nav => {
-      let {href, rel} = nav;
-      let url = page.siteUrl + href;
-      let titleMap = {
-        alternate: 'rss',
-        previous: '&#8592;',
-        next: '&#8594;',
-      };
-      let title = titleMap[rel] ? titleMap[rel] : rel;
-      html += `<a href="${url}" class="btn btn-primary black bg-darken-1 mr1">${title}</a>`;
-    });
-    html += `
-        </nav>
-      </footer>
-    `;
+    html += `\n<footer class="m1">`;
+    html += Nav(page.links, page.siteUrl);
+    html += `</footer>`;
 
     html += `
       </body>
