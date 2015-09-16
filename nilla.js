@@ -66,20 +66,12 @@ var polySolvePage =
 	var line = "\n";
 	var ind = '  ';
 	var maxWidth = 1280;
+	var HTML_TYPES = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'text', 'quote', 'ol', 'ul'];
 
 	var imgfloConfig = undefined;
 
 	function escape(html) {
 	  return (0, _he.encode)(html, { 'useNamedReferences': true });
-	}
-
-	function removeLast(str, search) {
-	  var split = str.split('/');
-	  if (split[split.length - 1] === 'index.html') {
-	    split[split.length - 1] = '';
-	    str = split.join('/');
-	  }
-	  return str;
 	}
 
 	function renderTitle(block) {
@@ -161,7 +153,7 @@ var polySolvePage =
 	}
 
 	function renderHTML(block) {
-	  if (['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'text', 'quote'].indexOf(block.type) === -1) return '';
+	  if (HTML_TYPES.indexOf(block.type) === -1) return '';
 	  if (block.html) return block.html;
 	  return '';
 	}
@@ -180,7 +172,7 @@ var polySolvePage =
 	  try {
 	    imgfloConfig = page.config.image_filters;
 
-	    html += '<!doctype html>\n      <html>\n        <head>\n          <meta charset="utf-8">\n          <title>' + escape(page.title) + '</title>\n          <link rel="stylesheet" href="https://d2v52k3cl9vedd.cloudfront.net/basscss/7.0.4/basscss.min.css">\n        </head>\n      <body>';
+	    html += '<!doctype html>\n      <html>\n        <head>\n          <meta charset="utf-8">\n          <title>' + escape(page.title) + '</title>\n          <link rel="stylesheet" href="https://d2v52k3cl9vedd.cloudfront.net/basscss/7.0.4/basscss.min.css">\n          <style>\n            .btn-link:hover { text-decoration: underline; }\n          </style>\n        </head>\n      <body>';
 
 	    // html += "<!-- debug:\n" + JSON.stringify(page, null, 2) + "\n-->";
 
@@ -3874,6 +3866,18 @@ var polySolvePage =
 	  next: '&#8594;'
 	};
 
+	function removeLast(str) {
+	  var by = arguments.length <= 1 || arguments[1] === undefined ? '/' : arguments[1];
+	  var search = arguments.length <= 2 || arguments[2] === undefined ? 'index.html' : arguments[2];
+
+	  var split = str.split(by);
+	  if (split[split.length - 1] === search) {
+	    split[split.length - 1] = '';
+	    str = split.join(by);
+	  }
+	  return str;
+	}
+
 	exports['default'] = function (links) {
 	  var siteUrl = arguments.length <= 1 || arguments[1] === undefined ? '' : arguments[1];
 
@@ -3885,9 +3889,9 @@ var polySolvePage =
 	    var rel = nav.rel;
 	    var title = nav.title;
 
-	    var url = siteUrl + href;
+	    var url = removeLast(siteUrl + href);
 	    if (titleMap[rel]) title = titleMap[rel];
-	    html += '<a href="' + url + '" rel="$rel" class="btn compact btn-link p1">' + title + '</a>';
+	    html += '<a href="' + url + '" rel="$rel" class="btn btn-link p1">' + title + '</a>';
 	  });
 	  html += '</nav>';
 

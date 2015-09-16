@@ -6,20 +6,12 @@ import Nav from './nav';
 const line = "\n";
 const ind = '  ';
 const maxWidth = 1280;
+const HTML_TYPES = ['h1','h2','h3','h4','h5','h6','text','quote','ol','ul'];
 
 let imgfloConfig;
 
 function escape (html) {
   return encode(html, {'useNamedReferences': true});
-}
-
-function removeLast (str, search) {
-  let split = str.split('/');
-  if (split[split.length-1] === 'index.html') {
-    split[split.length-1] = '';
-    str = split.join('/')
-  }
-  return str;
 }
 
 function renderTitle (block) {
@@ -99,7 +91,7 @@ function renderCover (block) {
 }
 
 function renderHTML (block) {
-  if (['h1','h2','h3','h4','h5','h6','text','quote'].indexOf(block.type) === -1)
+  if (HTML_TYPES.indexOf(block.type) === -1)
     return '';
   if (block.html)
     return block.html;
@@ -131,6 +123,9 @@ export default function (page, options, callback) {
           <meta charset="utf-8">
           <title>${escape(page.title)}</title>
           <link rel="stylesheet" href="https://d2v52k3cl9vedd.cloudfront.net/basscss/7.0.4/basscss.min.css">
+          <style>
+            .btn-link:hover { text-decoration: underline; }
+          </style>
         </head>
       <body>`;
 

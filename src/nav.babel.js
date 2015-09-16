@@ -6,6 +6,15 @@ const titleMap = {
   next: '&#8594;',
 };
 
+function removeLast (str, by='/', search='index.html') {
+  let split = str.split(by);
+  if (split[split.length-1] === search) {
+    split[split.length-1] = '';
+    str = split.join(by);
+  }
+  return str;
+}
+
 export default function (links, siteUrl='') {
   if (!links || !links.length)
     return ``;
@@ -13,10 +22,10 @@ export default function (links, siteUrl='') {
   let html = `\n<nav>`;
   links.forEach(nav => {
     let {href, rel, title} = nav;
-    let url = siteUrl + href;
+    let url = removeLast(siteUrl + href);
     if (titleMap[rel])
       title = titleMap[rel];
-    html += `<a href="${url}" rel="$rel" class="btn compact btn-link p1">${title}</a>`;
+    html += `<a href="${url}" rel="$rel" class="btn btn-link p1">${title}</a>`;
   });
   html += `</nav>`;
 
