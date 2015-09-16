@@ -66,7 +66,7 @@ var polySolvePage =
 	var line = "\n";
 	var ind = '  ';
 	var maxWidth = 1280;
-	var HTML_TYPES = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'text', 'quote', 'ol', 'ul'];
+	var HTML_TYPES = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'text', 'quote', 'list'];
 
 	var imgfloConfig = undefined;
 
