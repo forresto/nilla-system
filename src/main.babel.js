@@ -1,6 +1,5 @@
 import imgflo from 'imgflo-url';
-import {encode} from 'he';
-
+import {escape} from './util';
 import Nav from './nav';
 
 const line = "\n";
@@ -10,21 +9,17 @@ const HTML_TYPES = ['h1','h2','h3','h4','h5','h6','text','quote','list'];
 
 let imgfloConfig;
 
-function escape (html) {
-  return encode(html, {'useNamedReferences': true});
-}
-
 function renderTitle (block) {
   let html = '';
   if (block.metadata && block.metadata.title)
-    html += `<h2>${encode(block.metadata.title)}</h2>`;
+    html += `<h2>${escape(block.metadata.title)}</h2>`;
   return html;
 }
 
 function renderDescription (block) {
   let html = '';
   if (block.metadata && block.metadata.description)
-    html += `<p>${encode(block.metadata.description)}</p>`;
+    html += `<p>${escape(block.metadata.description)}</p>`;
   return html;
 }
 
@@ -84,7 +79,7 @@ function renderCover (block) {
     // if (height)
     //   html += `height="${height}" `
     if (block.metadata && block.metadata.caption)
-      html += `alt="${encode(block.metadata.caption)}" `
+      html += `alt="${escape(block.metadata.caption)}" `
     html += `/></div>`;
   }
   return html;
@@ -110,6 +105,7 @@ function renderBlock (block) {
 
 // Just wrap each item in a section, and output the HTML as provided by API
 export default function (page, options, callback) {
+  let startTime = Date.now();
   let html = '';
   let err = null;
   let details = {};
@@ -129,8 +125,6 @@ export default function (page, options, callback) {
         </head>
       <body>`;
 
-    // html += "<!-- debug:\n" + JSON.stringify(page, null, 2) + "\n-->";
-
     html += `\n<header class="m1">`;
     html += Nav(page.navigation, page.siteUrl);
     html += `</header>`;
@@ -148,9 +142,15 @@ export default function (page, options, callback) {
     html += Nav(page.links, page.siteUrl);
     html += `</footer>`;
 
-    html += `
-      </body>
-    </html>`;
+    // Debug info
+    let solveTime = Date.now() - startTime;
+    let itemsString = JSON.stringify(page.items, null, 2);
+    html += `\n<!-- solve time: ${solveTime}ms
+      page.items = ${itemsString};
+    -->`;
+
+    html += `\n</body>`;
+    html += `\n</html>`;
 
     return callback(err, html, details);
   } catch (error) {

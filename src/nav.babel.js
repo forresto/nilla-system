@@ -1,3 +1,5 @@
+import {escape} from './util';
+
 // Make <nav> from an array of links
 
 const titleMap = {
@@ -25,7 +27,7 @@ export default function (links, siteUrl='') {
     let url = removeLast(siteUrl + href);
     if (titleMap[rel])
       title = titleMap[rel];
-    html += `<a href="${url}" rel="$rel" class="btn btn-link p1">${title}</a>`;
+    html += `<a href="${url}" rel="$rel" class="btn btn-link p1">${escape(title)}</a>`;
   });
   html += `</nav>`;
 

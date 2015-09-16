@@ -57,9 +57,9 @@ var polySolvePage =
 
 	var _imgfloUrl2 = _interopRequireDefault(_imgfloUrl);
 
-	var _he = __webpack_require__(19);
+	var _util = __webpack_require__(19);
 
-	var _nav = __webpack_require__(20);
+	var _nav = __webpack_require__(21);
 
 	var _nav2 = _interopRequireDefault(_nav);
 
@@ -70,19 +70,15 @@ var polySolvePage =
 
 	var imgfloConfig = undefined;
 
-	function escape(html) {
-	  return (0, _he.encode)(html, { 'useNamedReferences': true });
-	}
-
 	function renderTitle(block) {
 	  var html = '';
-	  if (block.metadata && block.metadata.title) html += '<h2>' + (0, _he.encode)(block.metadata.title) + '</h2>';
+	  if (block.metadata && block.metadata.title) html += '<h2>' + (0, _util.escape)(block.metadata.title) + '</h2>';
 	  return html;
 	}
 
 	function renderDescription(block) {
 	  var html = '';
-	  if (block.metadata && block.metadata.description) html += '<p>' + (0, _he.encode)(block.metadata.description) + '</p>';
+	  if (block.metadata && block.metadata.description) html += '<p>' + (0, _util.escape)(block.metadata.description) + '</p>';
 	  return html;
 	}
 
@@ -92,7 +88,7 @@ var polySolvePage =
 	    var authors = block.metadata.author.map(function (author) {
 	      var span = '<span>';
 	      if (author.url) span += '<a href="' + author.url + '">';
-	      if (author.name) span += escape(author.name);else span += 'credit';
+	      if (author.name) span += (0, _util.escape)(author.name);else span += 'credit';
 	      if (author.url) span += '<a href="' + author.url + '">';
 	      span += '</span>';
 	    });
@@ -146,7 +142,7 @@ var polySolvePage =
 	    //   html += `width="${width}" `
 	    // if (height)
 	    //   html += `height="${height}" `
-	    if (block.metadata && block.metadata.caption) html += 'alt="' + (0, _he.encode)(block.metadata.caption) + '" ';
+	    if (block.metadata && block.metadata.caption) html += 'alt="' + (0, _util.escape)(block.metadata.caption) + '" ';
 	    html += '/></div>';
 	  }
 	  return html;
@@ -165,6 +161,7 @@ var polySolvePage =
 	// Just wrap each item in a section, and output the HTML as provided by API
 
 	exports['default'] = function (page, options, callback) {
+	  var startTime = Date.now();
 	  var html = '';
 	  var err = null;
 	  var details = {};
@@ -172,9 +169,7 @@ var polySolvePage =
 	  try {
 	    imgfloConfig = page.config.image_filters;
 
-	    html += '<!doctype html>\n      <html>\n        <head>\n          <meta charset="utf-8">\n          <title>' + escape(page.title) + '</title>\n          <link rel="stylesheet" href="https://d2v52k3cl9vedd.cloudfront.net/basscss/7.0.4/basscss.min.css">\n          <style>\n            .btn-link:hover { text-decoration: underline; }\n          </style>\n        </head>\n      <body>';
-
-	    // html += "<!-- debug:\n" + JSON.stringify(page, null, 2) + "\n-->";
+	    html += '<!doctype html>\n      <html>\n        <head>\n          <meta charset="utf-8">\n          <title>' + (0, _util.escape)(page.title) + '</title>\n          <link rel="stylesheet" href="https://d2v52k3cl9vedd.cloudfront.net/basscss/7.0.4/basscss.min.css">\n          <style>\n            .btn-link:hover { text-decoration: underline; }\n          </style>\n        </head>\n      <body>';
 
 	    html += '\n<header class="m1">';
 	    html += (0, _nav2['default'])(page.navigation, page.siteUrl);
@@ -193,7 +188,13 @@ var polySolvePage =
 	    html += (0, _nav2['default'])(page.links, page.siteUrl);
 	    html += '</footer>';
 
-	    html += '\n      </body>\n    </html>';
+	    // Debug info
+	    var solveTime = Date.now() - startTime;
+	    var itemsString = JSON.stringify(page.items, null, 2);
+	    html += '\n<!-- solve time: ' + solveTime + 'ms\n      page.items = ' + itemsString + ';\n    -->';
+
+	    html += '\n</body>';
+	    html += '\n</html>';
 
 	    return callback(err, html, details);
 	  } catch (error) {
@@ -3519,6 +3520,23 @@ var polySolvePage =
 /* 19 */
 /***/ function(module, exports, __webpack_require__) {
 
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+	exports.escape = escape;
+
+	var _he = __webpack_require__(20);
+
+	function escape(html) {
+	  return (0, _he.encode)(html, { 'useNamedReferences': true });
+	}
+
+/***/ },
+/* 20 */
+/***/ function(module, exports, __webpack_require__) {
+
 	var __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(module, global) {/*! http://mths.be/he v0.5.0 by @mathias | MIT license */
 	;(function(root) {
 
@@ -3850,16 +3868,19 @@ var polySolvePage =
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(14)(module), (function() { return this; }())))
 
 /***/ },
-/* 20 */
-/***/ function(module, exports) {
-
-	// Make <nav> from an array of links
+/* 21 */
+/***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	Object.defineProperty(exports, '__esModule', {
 	  value: true
 	});
+
+	var _util = __webpack_require__(19);
+
+	// Make <nav> from an array of links
+
 	var titleMap = {
 	  alternate: 'rss',
 	  previous: '&#8592;',
@@ -3891,7 +3912,7 @@ var polySolvePage =
 
 	    var url = removeLast(siteUrl + href);
 	    if (titleMap[rel]) title = titleMap[rel];
-	    html += '<a href="' + url + '" rel="$rel" class="btn btn-link p1">' + title + '</a>';
+	    html += '<a href="' + url + '" rel="$rel" class="btn btn-link p1">' + (0, _util.escape)(title) + '</a>';
 	  });
 	  html += '</nav>';
 
