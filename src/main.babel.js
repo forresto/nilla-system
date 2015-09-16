@@ -6,7 +6,7 @@ import Nav from './nav';
 const line = "\n";
 const ind = '  ';
 const maxWidth = 1280;
-const HTML_TYPES = ['h1','h2','h3','h4','h5','h6','text','quote','ol','ul'];
+const HTML_TYPES = ['h1','h2','h3','h4','h5','h6','text','quote','list'];
 
 let imgfloConfig;
 
