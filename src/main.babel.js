@@ -124,7 +124,7 @@ export default function (page, options, callback) {
         </head>
       <body>`;
 
-    html += `\n<header class="m1">`;
+    html += `\n<header class="p1">`;
     html += Nav(page.navigation, page.siteUrl);
     html += `</header>`;
 
@@ -137,7 +137,7 @@ export default function (page, options, callback) {
       html += `\n</section>`;
     });
 
-    html += `\n<footer class="m1">`;
+    html += `\n<footer class="p1 border-top">`;
     html += Nav(page.links, page.siteUrl);
     html += `</footer>`;
 

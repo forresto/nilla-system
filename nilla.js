@@ -169,7 +169,7 @@ var polySolvePage =
 
 	    html += '<!doctype html>\n      <html>\n        <head>\n          <meta charset="utf-8">\n          <title>' + (0, _util.escape)(page.title) + '</title>\n          <link rel="stylesheet" href="https://d2v52k3cl9vedd.cloudfront.net/basscss/7.0.4/basscss.min.css">\n          <style>\n            .btn-link:hover { text-decoration: underline; }\n            h1,h2,h3,h4,h5,h6,p,ul,ol,blockquote { max-width: 950px; margin: 0.5em 1rem;}\n          </style>\n        </head>\n      <body>';
 
-	    html += '\n<header class="m1">';
+	    html += '\n<header class="p1">';
 	    html += (0, _nav2['default'])(page.navigation, page.siteUrl);
 	    html += '</header>';
 
@@ -182,7 +182,7 @@ var polySolvePage =
 	      html += '\n</section>';
 	    });
 
-	    html += '\n<footer class="m1">';
+	    html += '\n<footer class="p1 border-top">';
 	    html += (0, _nav2['default'])(page.links, page.siteUrl);
 	    html += '</footer>';
 
@@ -3912,6 +3912,8 @@ var polySolvePage =
 
 	    var url = removeLast(siteUrl + href);
 	    if (titleMap[rel]) title = titleMap[rel];
+	    if (!title) title = rel;
+	    if (!title) title = 'link';
 	    html += '<a href="' + url + '" rel="$rel" class="btn btn-link p1">' + (0, _util.escape)(title) + '</a>';
 	  });
 	  html += '</nav>';

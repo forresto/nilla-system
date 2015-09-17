@@ -27,6 +27,10 @@ export default function (links, siteUrl='') {
     let url = removeLast(siteUrl + href);
     if (titleMap[rel])
       title = titleMap[rel];
+    if (!title)
+      title = rel;
+    if (!title)
+      title = 'link';
     html += `<a href="${url}" rel="$rel" class="btn btn-link p1">${escape(title)}</a>`;
   });
   html += `</nav>`;
