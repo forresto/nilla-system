@@ -4,8 +4,8 @@ import {escape} from './util';
 
 const titleMap = {
   alternate: 'rss',
-  previous: '&#8592;',
-  next: '&#8594;',
+  previous: '←',
+  next: '→',
 };
 
 function removeLast (str, by='/', search='index.html') {

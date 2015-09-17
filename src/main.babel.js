@@ -2,9 +2,7 @@ import imgflo from 'imgflo-url';
 import {escape} from './util';
 import Nav from './nav';
 
-const line = "\n";
-const ind = '  ';
-const maxWidth = 1280;
+const MAX_WIDTH = 1280;
 const HTML_TYPES = ['h1','h2','h3','h4','h5','h6','text','quote','list'];
 
 let imgfloConfig;
@@ -46,11 +44,11 @@ function renderAttribution (block) {
 function sizeByWidth (cover) {
   let {width, height} = cover;
   if (!width || !height) {
-    return {width: maxWidth};
-  } else if (width <= maxWidth) {
+    return {width: MAX_WIDTH};
+  } else if (width <= MAX_WIDTH) {
     return {width: width, height: height};
   } else {
-    let scale = maxWidth/width
+    let scale = MAX_WIDTH/width
     return {
       width: Math.round(width*scale),
       height: Math.round(height*scale)
@@ -73,7 +71,7 @@ function renderCover (block) {
   let html = '';
   if (block.cover && block.cover.src && imgfloConfig) {
     let {src, width, height} = sizeAndProxyImage(block.cover);
-    html += `<div><img src="${src}" `;
+    html += `<div class=""><img src="${src}" `;
     // if (width)
     //   html += `width="${width}" `
     // if (height)
@@ -121,6 +119,7 @@ export default function (page, options, callback) {
           <link rel="stylesheet" href="https://d2v52k3cl9vedd.cloudfront.net/basscss/7.0.4/basscss.min.css">
           <style>
             .btn-link:hover { text-decoration: underline; }
+            h1,h2,h3,h4,h5,h6,p,ul,ol,blockquote { max-width: 950px; margin: 0.5em 1rem;}
           </style>
         </head>
       <body>`;
@@ -130,7 +129,7 @@ export default function (page, options, callback) {
     html += `</header>`;
 
     page.items.forEach(item => {
-      html += `\n<section>`;
+      html += `\n<section class="py1 border-top">`;
       // html += renderBlock(item);
       item.content.forEach(block => {
         html += renderBlock(block);
@@ -143,11 +142,11 @@ export default function (page, options, callback) {
     html += `</footer>`;
 
     // Debug info
-    let solveTime = Date.now() - startTime;
-    let itemsString = JSON.stringify(page.items, null, 2);
-    html += `\n<!-- solve time: ${solveTime}ms
-      page.items = ${itemsString};
-    -->`;
+    details.solveTime = Date.now() - startTime;
+    // let itemsString = JSON.stringify(page.items, null, 2);
+    // html += `\n<!-- solve time: ${details.solveTime}ms
+    //   page.items = ${itemsString};
+    // -->`;
 
     html += `\n</body>`;
     html += `\n</html>`;

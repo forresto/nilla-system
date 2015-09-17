@@ -63,9 +63,7 @@ var polySolvePage =
 
 	var _nav2 = _interopRequireDefault(_nav);
 
-	var line = "\n";
-	var ind = '  ';
-	var maxWidth = 1280;
+	var MAX_WIDTH = 1280;
 	var HTML_TYPES = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'text', 'quote', 'list'];
 
 	var imgfloConfig = undefined;
@@ -102,11 +100,11 @@ var polySolvePage =
 	  var height = cover.height;
 
 	  if (!width || !height) {
-	    return { width: maxWidth };
-	  } else if (width <= maxWidth) {
+	    return { width: MAX_WIDTH };
+	  } else if (width <= MAX_WIDTH) {
 	    return { width: width, height: height };
 	  } else {
-	    var scale = maxWidth / width;
+	    var scale = MAX_WIDTH / width;
 	    return {
 	      width: Math.round(width * scale),
 	      height: Math.round(height * scale)
@@ -137,7 +135,7 @@ var polySolvePage =
 	    var width = _sizeAndProxyImage.width;
 	    var height = _sizeAndProxyImage.height;
 
-	    html += '<div><img src="' + src + '" ';
+	    html += '<div class=""><img src="' + src + '" ';
 	    // if (width)
 	    //   html += `width="${width}" `
 	    // if (height)
@@ -169,14 +167,14 @@ var polySolvePage =
 	  try {
 	    imgfloConfig = page.config.image_filters;
 
-	    html += '<!doctype html>\n      <html>\n        <head>\n          <meta charset="utf-8">\n          <title>' + (0, _util.escape)(page.title) + '</title>\n          <link rel="stylesheet" href="https://d2v52k3cl9vedd.cloudfront.net/basscss/7.0.4/basscss.min.css">\n          <style>\n            .btn-link:hover { text-decoration: underline; }\n          </style>\n        </head>\n      <body>';
+	    html += '<!doctype html>\n      <html>\n        <head>\n          <meta charset="utf-8">\n          <title>' + (0, _util.escape)(page.title) + '</title>\n          <link rel="stylesheet" href="https://d2v52k3cl9vedd.cloudfront.net/basscss/7.0.4/basscss.min.css">\n          <style>\n            .btn-link:hover { text-decoration: underline; }\n            h1,h2,h3,h4,h5,h6,p,ul,ol,blockquote { max-width: 950px; margin: 0.5em 1rem;}\n          </style>\n        </head>\n      <body>';
 
 	    html += '\n<header class="m1">';
 	    html += (0, _nav2['default'])(page.navigation, page.siteUrl);
 	    html += '</header>';
 
 	    page.items.forEach(function (item) {
-	      html += '\n<section>';
+	      html += '\n<section class="py1 border-top">';
 	      // html += renderBlock(item);
 	      item.content.forEach(function (block) {
 	        html += renderBlock(block);
@@ -189,9 +187,11 @@ var polySolvePage =
 	    html += '</footer>';
 
 	    // Debug info
-	    var solveTime = Date.now() - startTime;
-	    var itemsString = JSON.stringify(page.items, null, 2);
-	    html += '\n<!-- solve time: ' + solveTime + 'ms\n      page.items = ' + itemsString + ';\n    -->';
+	    details.solveTime = Date.now() - startTime;
+	    // let itemsString = JSON.stringify(page.items, null, 2);
+	    // html += `\n<!-- solve time: ${details.solveTime}ms
+	    //   page.items = ${itemsString};
+	    // -->`;
 
 	    html += '\n</body>';
 	    html += '\n</html>';
@@ -3883,8 +3883,8 @@ var polySolvePage =
 
 	var titleMap = {
 	  alternate: 'rss',
-	  previous: '&#8592;',
-	  next: '&#8594;'
+	  previous: '←',
+	  next: '→'
 	};
 
 	function removeLast(str) {
