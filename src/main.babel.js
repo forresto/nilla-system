@@ -1,6 +1,7 @@
 import imgflo from 'imgflo-url';
 import {escape} from './util';
 import Nav from './nav';
+import calcSectionColors from './calcSectionColors';
 
 const MAX_WIDTH = 1280;
 const HTML_TYPES = ['h1','h2','h3','h4','h5','h6','text','quote','list'];
@@ -119,7 +120,7 @@ export default function (page, options, callback) {
           <link rel="stylesheet" href="https://d2v52k3cl9vedd.cloudfront.net/basscss/7.0.4/basscss.min.css">
           <style>
             .btn-link:hover { text-decoration: underline; }
-            h1,h2,h3,h4,h5,h6,p,ul,ol,blockquote { max-width: 950px; margin: 0.5em 1rem;}
+            h1,h2,h3,h4,h5,h6,p,ul,ol,blockquote { max-width: 950px; }
           </style>
         </head>
       <body>`;
@@ -129,7 +130,8 @@ export default function (page, options, callback) {
     html += `</header>`;
 
     page.items.forEach(item => {
-      html += `\n<section class="py1 border-top">`;
+      let sectionColors = calcSectionColors(item);
+      html += `\n<section class="p2" style="${sectionColors}">`;
       // html += renderBlock(item);
       item.content.forEach(block => {
         html += renderBlock(block);
@@ -137,7 +139,7 @@ export default function (page, options, callback) {
       html += `\n</section>`;
     });
 
-    html += `\n<footer class="p1 border-top">`;
+    html += `\n<footer class="p1">`;
     html += Nav(page.links, page.siteUrl);
     html += `</footer>`;
 
