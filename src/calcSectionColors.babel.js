@@ -28,5 +28,8 @@ export default function (item) {
   .reverse();
   let bg = colors[0].hslString();
   let fg = colors[0].dark() ? 'white' : 'black';
-  return `background-color: ${bg}; color: ${fg};`;
+  return {
+    class: fg,
+    style: `background-color: ${bg}; color: ${fg};`
+  };
 }

@@ -72,12 +72,6 @@ var polySolvePage =
 
 	var imgfloConfig = undefined;
 
-	function renderTitle(block) {
-	  var html = '';
-	  if (block.metadata && block.metadata.title) html += '<h2>' + (0, _util.escape)(block.metadata.title) + '</h2>';
-	  return html;
-	}
-
 	function renderDescription(block) {
 	  var html = '';
 	  if (block.metadata && block.metadata.description) html += '<p>' + (0, _util.escape)(block.metadata.description) + '</p>';
@@ -85,18 +79,28 @@ var polySolvePage =
 	}
 
 	function renderAttribution(block) {
-	  var html = '';
-	  if (block.metadata && block.metadata.author && block.metadata.author.length) {
+	  if (!block.metadata) return '';
+	  var links = [];
+	  if (block.metadata.isBasedOnUrl || block.metadata.title) {
+	    var title = '<span>';
+	    if (block.metadata.isBasedOnUrl) title += '<a href="' + block.metadata.isBasedOnUrl + '">';
+	    if (block.metadata.title) title += '' + (0, _util.escape)(block.metadata.title);else if (block.metadata.isBasedOnUrl) title += 'source';
+	    if (block.metadata.isBasedOnUrl) title += '</a>';
+	    title += '</span>';
+	    links.push(title);
+	  }
+	  if (block.metadata.author && block.metadata.author.length) {
 	    var authors = block.metadata.author.map(function (author) {
 	      var span = '<span>';
 	      if (author.url) span += '<a href="' + author.url + '">';
-	      if (author.name) span += (0, _util.escape)(author.name);else span += 'credit';
-	      if (author.url) span += '<a href="' + author.url + '">';
+	      if (author.name) span += (0, _util.escape)(author.name);else if (author.url) span += 'credit';
+	      if (author.url) span += '</a>';
 	      span += '</span>';
+	      return span;
 	    });
-	    html += '<p>' + authors.join(', ') + '</p>';
+	    links.push(authors.join(', '));
 	  }
-	  return html;
+	  return '<p>' + links.join(' / ') + '</p>';
 	}
 
 	function sizeByWidth(cover) {
@@ -157,7 +161,7 @@ var polySolvePage =
 	}
 
 	function renderBlock(block) {
-	  return '\n    ' + renderCover(block) + '\n    ' + renderTitle(block) + '\n    ' + renderAttribution(block) + '\n    ' + renderDescription(block) + '\n    ' + renderHTML(block) + '\n  ';
+	  return '\n    ' + renderHTML(block) + '\n    ' + renderCover(block) + '\n    ' + renderAttribution(block) + '\n    ' + renderDescription(block) + '\n  ';
 	}
 
 	// Just wrap each item in a section, and output the HTML as provided by API
@@ -171,7 +175,7 @@ var polySolvePage =
 	  try {
 	    imgfloConfig = page.config.image_filters;
 
-	    html += '<!doctype html>\n      <html>\n        <head>\n          <meta charset="utf-8">\n          <title>' + (0, _util.escape)(page.title) + '</title>\n          <link rel="stylesheet" href="https://d2v52k3cl9vedd.cloudfront.net/basscss/7.0.4/basscss.min.css">\n          <style>\n            .btn-link:hover { text-decoration: underline; }\n            h1,h2,h3,h4,h5,h6,p,ul,ol,blockquote { max-width: 950px; }\n          </style>\n        </head>\n      <body>';
+	    html += '<!doctype html>\n      <html>\n        <head>\n          <meta charset="utf-8">\n          <title>' + (0, _util.escape)(page.title) + '</title>\n          <link rel="stylesheet" href="https://d2v52k3cl9vedd.cloudfront.net/basscss/7.0.4/basscss.min.css">\n          <style>\n            .btn-link:hover { text-decoration: underline; }\n            h1,h2,h3,h4,h5,h6,p,ul,ol,blockquote { max-width: 950px; }\n            .white a { color: white; text-decoration: underline; }\n            .black a { color: black; text-decoration: underline; }\n          </style>\n        </head>\n      <body>';
 
 	    html += '\n<header class="p1">';
 	    html += (0, _nav2['default'])(page.navigation, page.siteUrl);
@@ -179,8 +183,7 @@ var polySolvePage =
 
 	    page.items.forEach(function (item) {
 	      var sectionColors = (0, _calcSectionColors2['default'])(item);
-	      html += '\n<section class="p2" style="' + sectionColors + '">';
-	      // html += renderBlock(item);
+	      html += '\n<section class="p2 ' + sectionColors['class'] + '" style="' + sectionColors.style + '">';
 	      item.content.forEach(function (block) {
 	        html += renderBlock(block);
 	      });
@@ -3968,7 +3971,10 @@ var polySolvePage =
 	  }).reverse();
 	  var bg = colors[0].hslString();
 	  var fg = colors[0].dark() ? 'white' : 'black';
-	  return 'background-color: ' + bg + '; color: ' + fg + ';';
+	  return {
+	    'class': fg,
+	    style: 'background-color: ' + bg + '; color: ' + fg + ';'
+	  };
 	};
 
 	module.exports = exports['default'];

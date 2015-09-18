@@ -8,13 +8,6 @@ const HTML_TYPES = ['h1','h2','h3','h4','h5','h6','text','quote','list'];
 
 let imgfloConfig;
 
-function renderTitle (block) {
-  let html = '';
-  if (block.metadata && block.metadata.title)
-    html += `<h2>${escape(block.metadata.title)}</h2>`;
-  return html;
-}
-
 function renderDescription (block) {
   let html = '';
   if (block.metadata && block.metadata.description)
@@ -23,23 +16,39 @@ function renderDescription (block) {
 }
 
 function renderAttribution (block) {
-  let html = '';
-  if (block.metadata && block.metadata.author && block.metadata.author.length) {
+  if (!block.metadata)
+    return '';
+  let links = [];
+  if (block.metadata.isBasedOnUrl || block.metadata.title) {
+    let title = `<span>`;
+    if (block.metadata.isBasedOnUrl)
+      title += `<a href="${block.metadata.isBasedOnUrl}">`;
+    if (block.metadata.title)
+      title += `${escape(block.metadata.title)}`;
+    else if (block.metadata.isBasedOnUrl)
+      title += `source`;
+    if (block.metadata.isBasedOnUrl)
+      title += `</a>`;
+    title += `</span>`;
+    links.push(title);
+  }
+  if (block.metadata.author && block.metadata.author.length) {
     let authors = block.metadata.author.map(author => {
       let span = `<span>`
       if (author.url)
         span += `<a href="${author.url}">`;
       if (author.name)
         span += escape(author.name);
-      else
+      else if (author.url)
         span += 'credit';
       if (author.url)
-        span += `<a href="${author.url}">`;
+        span += `</a>`;
       span += `</span>`
+      return span;
     });
-    html += `<p>${authors.join(', ')}</p>`;
+    links.push(authors.join(', '));
   }
-  return html;
+  return `<p>${links.join(' / ')}</p>`;
 }
 
 function sizeByWidth (cover) {
@@ -94,11 +103,10 @@ function renderHTML (block) {
 
 function renderBlock (block) {
   return `
+    ${renderHTML(block)}
     ${renderCover(block)}
-    ${renderTitle(block)}
     ${renderAttribution(block)}
     ${renderDescription(block)}
-    ${renderHTML(block)}
   `;
 }
 
@@ -121,6 +129,8 @@ export default function (page, options, callback) {
           <style>
             .btn-link:hover { text-decoration: underline; }
             h1,h2,h3,h4,h5,h6,p,ul,ol,blockquote { max-width: 950px; }
+            .white a { color: white; text-decoration: underline; }
+            .black a { color: black; text-decoration: underline; }
           </style>
         </head>
       <body>`;
@@ -131,8 +141,7 @@ export default function (page, options, callback) {
 
     page.items.forEach(item => {
       let sectionColors = calcSectionColors(item);
-      html += `\n<section class="p2" style="${sectionColors}">`;
-      // html += renderBlock(item);
+      html += `\n<section class="p2 ${sectionColors.class}" style="${sectionColors.style}">`;
       item.content.forEach(block => {
         html += renderBlock(block);
       });
