@@ -3944,8 +3944,6 @@ var polySolvePage =
 
 	var _color2 = _interopRequireDefault(_color);
 
-	popColor;
-
 	exports['default'] = function (item) {
 	  if (!item || !item.content || !item.content.length) return '';
 
