@@ -53,10 +53,6 @@ var polySolvePage =
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-	var _babelPolyfill = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"babel/polyfill\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
-
-	var _babelPolyfill2 = _interopRequireDefault(_babelPolyfill);
-
 	var _imgfloUrl = __webpack_require__(1);
 
 	var _imgfloUrl2 = _interopRequireDefault(_imgfloUrl);
@@ -147,13 +143,19 @@ var polySolvePage =
 	    var width = _sizeAndProxyImage.width;
 	    var height = _sizeAndProxyImage.height;
 
-	    html += '<div class=""><img src="' + src + '" ';
+	    var url = undefined;
+	    if (block.metadata && block.metadata.isBasedOnUrl) url = block.metadata.isBasedOnUrl;else url = block.cover.src;
+	    html += '<div class="">';
+	    if (url) html += '<a href="' + url + '">';
+	    html += '<img src="' + src + '" ';
 	    // if (width)
 	    //   html += `width="${width}" `
 	    // if (height)
 	    //   html += `height="${height}" `
 	    if (block.metadata && block.metadata.caption) html += 'alt="' + (0, _util.escape)(block.metadata.caption) + '" ';
-	    html += '/></div>';
+	    html += '/>';
+	    if (url) html += '</a>';
+	    html += '</div>';
 	  }
 	  return html;
 	}

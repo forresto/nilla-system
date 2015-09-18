@@ -81,14 +81,25 @@ function renderCover (block) {
   let html = '';
   if (block.cover && block.cover.src && imgfloConfig) {
     let {src, width, height} = sizeAndProxyImage(block.cover);
-    html += `<div class=""><img src="${src}" `;
+    let url;
+    if (block.metadata && block.metadata.isBasedOnUrl)
+      url = block.metadata.isBasedOnUrl;
+    else
+      url = block.cover.src;
+    html += `<div class="">`
+    if (url)
+      html += `<a href="${url}">`;
+    html += `<img src="${src}" `;
     // if (width)
     //   html += `width="${width}" `
     // if (height)
     //   html += `height="${height}" `
     if (block.metadata && block.metadata.caption)
       html += `alt="${escape(block.metadata.caption)}" `
-    html += `/></div>`;
+    html += `/>`;
+    if (url)
+      html += `</a>`;
+    html += `</div>`;
   }
   return html;
 }
