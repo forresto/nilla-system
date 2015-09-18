@@ -3947,9 +3947,14 @@ var polySolvePage =
 	exports['default'] = function (item) {
 	  if (!item || !item.content || !item.content.length) return '';
 
-	  var block = item.content.find(function (block) {
-	    return block.cover && block.cover.colors && block.cover.colors.length;
-	  });
+	  var block = undefined;
+	  for (var i = 0; i < item.content.length; i++) {
+	    var content = item.content[i];
+	    if (content.cover && content.cover.colors && content.cover.colors.length) {
+	      block = content;
+	      break;
+	    }
+	  }
 
 	  if (!block) return '';
 

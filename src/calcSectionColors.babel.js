@@ -4,9 +4,14 @@ export default function (item) {
   if (!item || !item.content || !item.content.length)
     return '';
 
-  let block = item.content.find(block => {
-    return (block.cover && block.cover.colors && block.cover.colors.length)
-  });
+  let block;
+  for (let i=0; i<item.content.length; i++) {
+    let content = item.content[i];
+    if (content.cover && content.cover.colors && content.cover.colors.length) {
+      block = content;
+      break;
+    }
+  }
 
   if (!block)
     return '';
