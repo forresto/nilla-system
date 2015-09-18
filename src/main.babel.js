@@ -24,7 +24,7 @@ function renderAttribution (block) {
     if (block.metadata.isBasedOnUrl)
       title += `<a href="${block.metadata.isBasedOnUrl}">`;
     if (block.metadata.title)
-      title += `${escape(block.metadata.title)}`;
+      title += escape(block.metadata.title);
     else if (block.metadata.isBasedOnUrl)
       title += `source`;
     if (block.metadata.isBasedOnUrl)

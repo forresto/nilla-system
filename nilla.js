@@ -53,6 +53,10 @@ var polySolvePage =
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
+	var _babelPolyfill = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"babel/polyfill\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+
+	var _babelPolyfill2 = _interopRequireDefault(_babelPolyfill);
+
 	var _imgfloUrl = __webpack_require__(1);
 
 	var _imgfloUrl2 = _interopRequireDefault(_imgfloUrl);
@@ -84,7 +88,7 @@ var polySolvePage =
 	  if (block.metadata.isBasedOnUrl || block.metadata.title) {
 	    var title = '<span>';
 	    if (block.metadata.isBasedOnUrl) title += '<a href="' + block.metadata.isBasedOnUrl + '">';
-	    if (block.metadata.title) title += '' + (0, _util.escape)(block.metadata.title);else if (block.metadata.isBasedOnUrl) title += 'source';
+	    if (block.metadata.title) title += (0, _util.escape)(block.metadata.title);else if (block.metadata.isBasedOnUrl) title += 'source';
 	    if (block.metadata.isBasedOnUrl) title += '</a>';
 	    title += '</span>';
 	    links.push(title);
