@@ -1,7 +1,5 @@
 import Color from 'color';
 
-popColor
-
 export default function (item) {
   if (!item || !item.content || !item.content.length)
     return '';
