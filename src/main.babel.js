@@ -2,6 +2,8 @@ import imgflo from 'imgflo-url';
 import {escape} from './util';
 import Nav from './nav';
 import calcSectionColors from './calcSectionColors';
+import React from 'react';
+import Cover from './Cover';
 
 const MAX_WIDTH = 1280;
 const HTML_TYPES = ['h1','h2','h3','h4','h5','h6','text','quote','list'];
@@ -51,55 +53,14 @@ function renderAttribution (block) {
   return `<p>${links.join(' / ')}</p>`;
 }
 
-function sizeByWidth (cover) {
-  let {width, height} = cover;
-  if (!width || !height) {
-    return {width: MAX_WIDTH};
-  } else if (width <= MAX_WIDTH) {
-    return {width: width, height: height};
-  } else {
-    let scale = MAX_WIDTH/width
-    return {
-      width: Math.round(width*scale),
-      height: Math.round(height*scale)
-    }
-  }
-}
-
-function sizeAndProxyImage (cover) {
-  let {src, width, height} = cover;
-  let imgfloParams = sizeByWidth(cover);
-  imgfloParams.input = src;
-  return {
-    src: imgflo(imgfloConfig, 'passthrough', imgfloParams),
-    width: imgfloParams.width,
-    height: imgfloParams.height
-  }
-}
-
 function renderCover (block) {
   let html = '';
   if (block.cover && block.cover.src && imgfloConfig) {
-    let {src, width, height} = sizeAndProxyImage(block.cover);
-    let url;
-    if (block.metadata && block.metadata.isBasedOnUrl)
-      url = block.metadata.isBasedOnUrl;
-    else
-      url = block.cover.src;
-    html += `<div class="">`
-    if (url)
-      html += `<a href="${url}">`;
-    html += `<img src="${src}" `;
-    // if (width)
-    //   html += `width="${width}" `
-    // if (height)
-    //   html += `height="${height}" `
-    if (block.metadata && block.metadata.caption)
-      html += `alt="${escape(block.metadata.caption)}" `
-    html += `/>`;
-    if (url)
-      html += `</a>`;
-    html += `</div>`;
+    let {metadata, cover} = block;
+    let props = {metadata, cover, imgfloConfig};
+    let img = <Cover {...props} />;
+    // TODO: renderToString for isomorphic fun
+    html += React.renderToStaticMarkup(img);
   }
   return html;
 }
