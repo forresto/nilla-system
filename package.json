@@ -2,11 +2,12 @@
   "name": "nilla-system",
   "version": "0.0.1",
   "description": "makes a website from The Grid API data",
-  "main": "nilla.js",
+  "main": "src/main.babel.js",
   "scripts": {
-    "test": "npm test",
-    "start": "export DEV=true; webpack-dev-server --hot",
-    "build": "webpack"
+    "test": "npm run build",
+    "start": "npm run clean; export DEV=true; webpack-dev-server --hot",
+    "build": "npm run clean; webpack",
+    "clean": "rm -rf build"
   },
   "repository": {
     "type": "git",

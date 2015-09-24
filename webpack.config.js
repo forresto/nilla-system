@@ -1,12 +1,16 @@
-__DEV = (process.env.DEV === 'true');
+var __DEV = (process.env.DEV === 'true');
+
+var entry = {};
+entry.nilla = './src/main.babel.js';
+if (__DEV) {
+  entry.preview = ['webpack/hot/dev-server', './preview/preview.babel.js'];
+}
 
 module.exports = {
-  entry: {
-    nilla: './src/main.babel.js',
-    preview: ['webpack/hot/dev-server', './preview/preview.babel.js']
-  },
+  entry: entry,
   output: {
-    path: './',
+    path: './build/',
+    publicPath: '/webpack-memory/',
     filename: '[name].js',
     library: 'polySolvePage',
     libraryTarget: 'var'

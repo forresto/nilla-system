@@ -1,0 +1,8 @@
+language: node_js
+node_js:
+- "0.12"
+script: bash ./deploy.sh
+env:
+  global:
+  - GH_REF: github.com/forresto/nilla-system.git
+  - secure: Z91PneeNmG4LVxtjEMjRdg218mqSh4ixku05FdPemguTv3BbyPr1mvaxh5oAMD+aCZXTz4OjvhNoImSHu/MpsXbnBaQgKVp0XVdKOPDRw8Tplp0Uf6HipUu+qFzdXxG1ryYIqGqpBOKk/qiwiO/zE8XY1XdGPlyeoSmH8bbA8tpiClH/KcDZlOqN/8/O5pahAq7t1mfSlhAs8iU6ib5mYHl70McPzTo1WBmHemtwT9Vq4so9kRq+RYOoiUtz/wshyKxzBHSphpCQgb0/cKwTmnbRx21/LgyMu7ZtfH1S0PozKb1u1/wApelik5dw+RBjUXagdlV+2foyYwnVcB3DEL0EINCncA5jRbnpNaQJO5Tt4IT0nUblVWByw5wtMbvNUdjcH2iCpRz1t5HpxkMoWkX/jcKnNQistKZjhlHjgvXLbjOvqOQlQtcC6y2UkwH3COVrJkCocFaOB0aTzTi1VJXh9t72qZch/3VqmQ5+xyVLoei5lZMw3lQ8zYdXKvwn42hpqPZyp/svyfiY3H82Mgmax4d6rK34eeup7jwFBDO0fmm71Vmfr3+W314E8uy3g3Y1N98bmW98L2FquQXLMQd1yBHZG5WcBo1pwWX763Zz4dyGT29kj9Y7Fv+4ztgbubcD5paHHUhdq/oydG/GGHsIrPz/II+UPRstvavMCb8=
