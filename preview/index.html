@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>nilla dev server</title>
+  <link rel="stylesheet" href="//d2v52k3cl9vedd.cloudfront.net/basscss/7.0.4/basscss.min.css">
+</head>
+<body class="bg-black white">
+  <header class="m1">
+    <h1><a href="https://github.com/forresto/nilla-system">nilla</a></h1>
+    <p>
+      builds a website from
+      <a href="https://developer.thegrid.io/">The Grid API</a> data
+    </p>
+  </header>
+  <h2 class="m1 mt3">fixtures/feed.json</h2>
+  <iframe id="feed" class="block m1" style="width: 90%; height: 100vh;"></iframe>
+  <h2 class="m1 mt3">fixtures/page.json</h2>
+  <iframe id="page" class="block m1" style="width: 90%; height: 100vh;"></iframe>
+  
+  <script src="http://localhost:8080/webpack-dev-server.js"></script>
+  <script src="../nilla.js"></script>
+  <script src="../preview.js"></script>
+</body>
+</html>
