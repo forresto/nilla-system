@@ -1,4 +1,5 @@
 import {escape} from './util';
+import {resolveRelativeUrl} from '@design-systems/url-helper';
 
 // Make <nav> from an array of links
 
@@ -8,23 +9,16 @@ const titleMap = {
   next: '→',
 };
 
-function removeLast (str, by='/', search='index.html') {
-  let split = str.split(by);
-  if (split[split.length-1] === search) {
-    split[split.length-1] = '';
-    str = split.join(by);
-  }
-  return str;
-}
-
-export default function (links, siteUrl='') {
+export default function (links, from) {
   if (!links || !links.length)
     return ``;
 
   let html = `\n<nav>`;
   links.forEach(nav => {
     let {href, rel, title} = nav;
-    let url = removeLast(siteUrl + href);
+    let url = resolveRelativeUrl(href, from);
+    if (!url)
+      url = './'
     if (titleMap[rel])
       title = titleMap[rel];
     if (!title)

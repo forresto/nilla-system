@@ -108,7 +108,7 @@ export default function (page, options, callback) {
       <body>`;
 
     html += `\n<header class="p1">`;
-    html += Nav(page.navigation, page.siteUrl);
+    html += Nav(page.navigation, page.path);
     html += `</header>`;
 
     page.items.forEach(item => {
@@ -121,7 +121,7 @@ export default function (page, options, callback) {
     });
 
     html += `\n<footer class="p1">`;
-    html += Nav(page.links, page.siteUrl);
+    html += Nav(page.links, page.path);
     html += `</footer>`;
 
     // Debug info
