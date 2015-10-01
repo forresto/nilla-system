@@ -95,7 +95,7 @@ export default function (page, options, callback) {
   let details = {};
 
   try {
-    imgfloConfig = page.config.image_filters
+    imgfloConfig = page.config.image_filters;
 
     html += `<!doctype html>
       <html>
@@ -104,8 +104,9 @@ export default function (page, options, callback) {
           <title>${escape(page.title)}</title>
           <link rel="stylesheet" href="https://d2v52k3cl9vedd.cloudfront.net/basscss/7.0.4/basscss.min.css">
           <style>
-            .btn-link:hover { text-decoration: underline; }
             h1,h2,h3,h4,h5,h6,p,ul,ol,blockquote { max-width: 950px; }
+            img { max-width: 100%; max-height: 95vh; }
+            .btn-link:hover { text-decoration: underline; }
             .white a { color: white; text-decoration: underline; }
             .black a { color: black; text-decoration: underline; }
           </style>
