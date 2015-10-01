@@ -3,7 +3,7 @@ import {escape} from './util';
 import Nav from './nav';
 import calcSectionColors from './calcSectionColors';
 import React from 'react';
-import Cover from './Cover';
+import Cover, {getAllImageSources} from './Cover';
 
 const MAX_WIDTH = 1280;
 const HTML_TYPES = ['h1','h2','h3','h4','h5','h6','text','quote','list'];
@@ -133,6 +133,9 @@ export default function (page, options, callback) {
 
     html += `\n</body>`;
     html += `\n</html>`;
+
+    // Used for imgflo preheating
+    details.images = getAllImageSources();
 
     return callback(err, html, details);
   } catch (error) {
