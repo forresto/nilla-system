@@ -4,8 +4,7 @@ import imgflo from 'imgflo-url';
 const sizes = [
   {maxWidth: 360, maxHeight: 360},
   {maxWidth: 640, maxHeight: 480},
-  {maxWidth: 1280, maxHeight: 720},
-  {maxWidth: 1920, maxHeight: 1080}
+  {maxWidth: 1280, maxHeight: 720}
 ];
 
 // All generated sources
