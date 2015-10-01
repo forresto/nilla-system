@@ -1,6 +1,6 @@
 {
   "name": "nilla-system",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "description": "makes a website from The Grid API data",
   "main": "src/main.babel.js",
   "scripts": {
