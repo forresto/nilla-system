@@ -49,8 +49,9 @@ function sizeAndProxyImage (cover, imgfloConfig, max) {
 export default class Cover extends React.Component {
   render() {
     let {metadata, cover, imgfloConfig} = this.props;
-    let {isBasedOnUrl, caption, title} = metadata;
+    let {isBasedOnUrl, url, caption, title} = metadata;
     let alt = caption || title;
+    let permalink = url || isBasedOnUrl;
 
     let lastSrc;
     let sources = [];
@@ -74,8 +75,8 @@ export default class Cover extends React.Component {
     }
     let img = <img alt={alt} src={sources[0]} {...imgProps} />;
 
-    if (isBasedOnUrl)
-      return <a href={isBasedOnUrl}>{img}</a>;
+    if (permalink)
+      return <a href={permalink}>{img}</a>;
     else
       return img;
   }

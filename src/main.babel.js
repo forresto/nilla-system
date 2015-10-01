@@ -18,32 +18,37 @@ function renderDescription (block) {
 }
 
 function renderAttribution (block) {
-  if (!block.metadata)
-    return '';
+  let {metadata} = block;
+  if (!metadata) return '';
+
+  let {isBasedOnUrl, url, title, author} = metadata;
+  let permalink = url || isBasedOnUrl;
+
   let links = [];
-  if (block.metadata.isBasedOnUrl || block.metadata.title) {
-    let title = `<span>`;
-    if (block.metadata.isBasedOnUrl)
-      title += `<a href="${block.metadata.isBasedOnUrl}">`;
-    if (block.metadata.title)
-      title += escape(block.metadata.title);
-    else if (block.metadata.isBasedOnUrl)
-      title += `source`;
-    if (block.metadata.isBasedOnUrl)
-      title += `</a>`;
-    title += `</span>`;
-    links.push(title);
+  if (permalink || title) {
+    let span = `<span>`;
+    if (permalink)
+      span += `<a href="${permalink}">`;
+    if (title)
+      span += escape(title);
+    else if (permalink)
+      span += `link`;
+    if (permalink)
+      span += `</a>`;
+    span += `</span>`;
+    links.push(span);
   }
-  if (block.metadata.author && block.metadata.author.length) {
-    let authors = block.metadata.author.map(author => {
+  if (author && author.length) {
+    let authors = author.map(auth => {
+      let {url, name} = auth;
       let span = `<span>`
-      if (author.url)
-        span += `<a href="${author.url}">`;
-      if (author.name)
-        span += escape(author.name);
-      else if (author.url)
+      if (url)
+        span += `<a href="${url}">`;
+      if (name)
+        span += escape(name);
+      else if (url)
         span += 'credit';
-      if (author.url)
+      if (url)
         span += `</a>`;
       span += `</span>`
       return span;
