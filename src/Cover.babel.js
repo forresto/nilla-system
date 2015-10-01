@@ -72,7 +72,6 @@ export default class Cover extends React.Component {
     let imgProps = {};
     if (srcset.length > 1) {
       imgProps.srcSet = srcset.join(', ');
-      imgProps.sizes = '(min-width: 40em) 80vw, 100vw';
     }
     let img = <img alt={alt} src={sources[0]} {...imgProps} />;
 
