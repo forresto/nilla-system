@@ -102,7 +102,7 @@ export default function (page, options, callback) {
       <head>
         <meta charset="utf-8">
         <title>${escape(page.title)}</title>
-        <link rel="canonical" href="index.html" >
+        <link rel="canonical" href="index.html" />
         <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
         <link rel="stylesheet" href="https://d2v52k3cl9vedd.cloudfront.net/basscss/7.0.4/basscss.min.css">
         <style amp-custom>
