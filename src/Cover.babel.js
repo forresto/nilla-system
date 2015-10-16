@@ -55,25 +55,38 @@ export default class Cover extends React.Component {
     let permalink = url || isBasedOnUrl;
 
     let lastSrc;
+    let lastWidth;
     let sources = [];
     let srcset = [];
     sizes.forEach( size => {
-      let {src, width} = sizeAndProxyImage(cover, imgfloConfig, size);
-      if (src !== lastSrc) {
-        sources.push(src);
+      let source = sizeAndProxyImage(cover, imgfloConfig, size);
+      let {src, width, height} = source;
+      if (src !== lastSrc || width !== lastWidth) {
+        sources.push(source);
         srcset.push(`${src} ${width}w`);
+        lastWidth = width;
+        if (src !== lastSrc) {
+          sourceCache.push(src);
+          lastSrc = source.src;
+        }
       }
-      lastSrc = src;
       return src;
     });
 
-    sourceCache = sourceCache.concat(sources);
+    let defaultSource = sources[1] || sources[0];
 
-    let imgProps = {};
+    let imgProps = {
+      alt: alt,
+      src: defaultSource.src,
+      width: defaultSource.width,
+      height: defaultSource.height
+    };
     if (srcset.length > 1) {
       imgProps.srcSet = srcset.join(', ');
     }
-    let img = <img alt={alt} src={sources[0]} {...imgProps} />;
+    let ampImg = <amp-img {...imgProps} />;
+    let noScript = <noscript><img {...imgProps} /></noscript>
+    let img = <span>{ampImg}{noScript}</span>
 
     if (permalink)
       return <a href={permalink}>{img}</a>;

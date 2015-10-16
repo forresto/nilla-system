@@ -98,19 +98,36 @@ export default function (page, options, callback) {
     imgfloConfig = page.config.image_filters;
 
     html += `<!doctype html>
-      <html>
-        <head>
-          <meta charset="utf-8">
-          <title>${escape(page.title)}</title>
-          <link rel="stylesheet" href="https://d2v52k3cl9vedd.cloudfront.net/basscss/7.0.4/basscss.min.css">
-          <style>
-            h1,h2,h3,h4,h5,h6,p,ul,ol,blockquote { max-width: 950px; }
-            img { max-width: 100%; max-height: 95vh; }
-            .btn-link:hover { text-decoration: underline; }
-            .white a { color: white; text-decoration: underline; }
-            .black a { color: black; text-decoration: underline; }
-          </style>
-        </head>
+      <html amp>
+      <head>
+        <meta charset="utf-8">
+        <title>${escape(page.title)}</title>
+        <link rel="canonical" href="index.html" >
+        <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+        <link rel="stylesheet" href="https://d2v52k3cl9vedd.cloudfront.net/basscss/7.0.4/basscss.min.css">
+        <style amp-custom>
+          body {
+            margin: 0;
+            padding: 0;
+          }
+          h1,h2,h3,h4,h5,h6,p,ul,ol,blockquote { 
+            max-width: 950px; 
+          }
+          .btn-link:hover { 
+            text-decoration: underline; 
+          }
+          .white a { 
+            color: white; 
+            text-decoration: underline; 
+          }
+          .black a { 
+            color: black; 
+            text-decoration: underline; 
+          }
+        </style>
+        <style>body {opacity: 0}</style><noscript><style>body {opacity: 1}</style></noscript>
+        <script async src="https://cdn.ampproject.org/v0.js"></script>
+      </head>
       <body>`;
 
     html += `\n<header class="p1">`;

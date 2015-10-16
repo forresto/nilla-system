@@ -2,7 +2,9 @@ import feed from '../fixtures/feed';
 import page from '../fixtures/page';
 
 function renderIframe (id, html) {
-  document.getElementById(id).src = "data:text/html;charset=utf-8,"+encodeURIComponent(html);
+  let iframe = document.getElementById(id)
+  iframe.src = "data:text/html;charset=utf-8,"+encodeURIComponent(html);
+  // iframe.contentWindow.location.hash = 'development=1';
 }
 
 window.polySolvePage(feed, {}, (err, html, details) => {
