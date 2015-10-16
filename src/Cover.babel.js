@@ -16,7 +16,7 @@ function sizeByMax (cover, max=sizes[0]) {
   let {width, height} = cover;
   let {maxWidth, maxHeight} = max;
   if (!width || !height) {
-    return {width: maxWidth};
+    return {width: 100, height: 100};
   }
   if (width <= maxWidth && height <= maxHeight) {
     return {width, height};
