@@ -124,7 +124,11 @@ export default function (page, options, callback) {
             color: black; 
             text-decoration: underline; 
           }
+          section {
+            border-left: 1em solid black;
+          }
         </style>
+        <script async custom-element="amp-image-lightbox" src="https://cdn.ampproject.org/v0/amp-image-lightbox-0.1.js"></script>
         <style>body {opacity: 0}</style><noscript><style>body {opacity: 1}</style></noscript>
         <script async src="https://cdn.ampproject.org/v0.js"></script>
       </head>
@@ -136,7 +140,7 @@ export default function (page, options, callback) {
 
     page.items.forEach(item => {
       let sectionColors = calcSectionColors(item);
-      html += `\n<section class="p2 ${sectionColors.class}" style="${sectionColors.style}">`;
+      html += `\n<section class="p2" style="${sectionColors.style}">`;
       item.content.forEach(block => {
         html += renderBlock(block);
       });

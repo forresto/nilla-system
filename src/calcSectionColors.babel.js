@@ -1,5 +1,11 @@
 import Color from 'color';
 
+function calcColorfulness (color) {
+  let lumFactor = Math.abs(0.5 - color.luminosity());
+  let colorfulness = color.saturation()/100 - lumFactor;
+  return colorfulness;
+};
+
 export default function (item) {
   if (!item || !item.content || !item.content.length)
     return '';
@@ -23,13 +29,11 @@ export default function (item) {
     return Color().rgb(color);
   })
   .sort((a,b) => {
-    return a.saturation() - b.saturation();
+    return calcColorfulness(a) - calcColorfulness(b);
   })
   .reverse();
-  let bg = colors[0].hslString();
-  let fg = colors[0].dark() ? 'white' : 'black';
+  let border = colors[0].hslString();
   return {
-    class: fg,
-    style: `background-color: ${bg}; color: ${fg};`
+    style: `border-color: ${border};`
   };
 }

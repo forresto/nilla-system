@@ -84,7 +84,7 @@ export default class Cover extends React.Component {
     if (srcset.length > 1) {
       imgProps.srcSet = srcset.join(', ');
     }
-    let ampImg = <amp-img {...imgProps} />;
+    let ampImg = <amp-img layout="responsive" {...imgProps} />;
     let noScript = <noscript><img {...imgProps} /></noscript>
     let img = <span>{ampImg}{noScript}</span>
 
