@@ -1,13 +1,18 @@
+webpack = require('webpack');
 var __DEV = (process.env.DEV === 'true');
 
 var entry = {};
+var plugins = [];
 entry.nilla = './src/main.babel.js';
 if (__DEV) {
   entry.preview = ['webpack/hot/dev-server', './preview/preview.babel.js'];
+} else {
+  plugins.push( new webpack.optimize.UglifyJsPlugin() );
 }
 
 module.exports = {
   entry: entry,
+  plugins: plugins,
   output: {
     path: './build/',
     publicPath: '/webpack-memory/',
