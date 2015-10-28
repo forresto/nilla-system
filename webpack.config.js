@@ -5,7 +5,7 @@ var entry = {};
 var plugins = [];
 entry.nilla = './src/main.babel.js';
 if (__DEV) {
-  entry.preview = ['webpack/hot/dev-server', './preview/preview.babel.js'];
+  entry.preview = './preview/preview.babel.js';
 } else {
   plugins.push( new webpack.optimize.UglifyJsPlugin() );
 }
@@ -25,10 +25,11 @@ module.exports = {
   module: {
     loaders: [
       { test: /\.babel\.js$/, loader: 'babel-loader' },
+      { test: /\.jsx$/, loader: 'babel-loader' },
       { test: /\.json$/, loader: 'json-loader' },
     ]
   },
   resolve: {
-    extensions: ['', '.babel.js', '.js', '.json']
+    extensions: ['', '.babel.js', '.jsx', '.js', '.json']
   }
 };

@@ -5,7 +5,7 @@
   "main": "src/main.babel.js",
   "scripts": {
     "test": "npm run build",
-    "start": "npm run clean; export DEV=true; webpack-dev-server --hot",
+    "start": "export DEV=true; webpack-dev-server --inline",
     "build": "npm run clean; webpack",
     "clean": "rm -rf build"
   },
