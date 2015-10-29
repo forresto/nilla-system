@@ -1,4 +1,10 @@
-${TRAVIS_TAG:?'not a tag'}
+if [ "$TRAVIS_TAG" = "" ]
+then
+   echo "Not a tag, not deploying"
+   exit 0
+else
+   echo "==> Building and deploying tag $TRAVIS_TAG <=="
+fi
 
 #!/bin/bash
 set -e # exit with nonzero exit code if anything fails
